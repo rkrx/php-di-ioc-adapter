@@ -1,0 +1,14 @@
+<phpunit bootstrap="vendor/autoload.php"
+		 backupGlobals="false"
+		 backupStaticAttributes="false"
+		 strict="true"
+		 verbose="true">
+	<testsuites>
+		<testsuite name="php-di-ioc-adapter">
+			<file>tests/PhpDiObjectFactoryTest.php</file>
+			<file>tests/PhpDiInstanceContainerTest.php</file>
+			<file>tests/PhpDiMethodInvokerTest.php</file>
+			<file>tests/PhpDiContainerTest.php</file>
+		</testsuite>
+	</testsuites>
+</phpunit>

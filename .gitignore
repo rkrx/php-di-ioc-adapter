@@ -1,5 +1,8 @@
 /*
 !/src
+!/tests
 !/.gitignore
 !/LICENSE
 !/README.md
+!/.travis.yml
+!/tests.xml
