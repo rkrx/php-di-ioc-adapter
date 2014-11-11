@@ -1,0 +1,23 @@
+{
+	"name": "rkr/php-di-ioc-adapter",
+	"type": "library",
+	"license": "MIT",
+	"require": {
+		"php": ">= 5.3",
+		"rkr/php-ioc-contract": "0.0.1",
+		"mnapoli/php-di": "4.4.2"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "~3.7@stable"
+	},
+	"autoload": {
+		"psr-4": {
+			"DIAdapter\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"DIAdapter\\": ["src/", "tests/"]
+		}
+	}
+}
