@@ -8,7 +8,6 @@
 			<file>tests/PhpDiObjectFactoryTest.php</file>
 			<file>tests/PhpDiInstanceContainerTest.php</file>
 			<file>tests/PhpDiMethodInvokerTest.php</file>
-			<file>tests/PhpDiContainerTest.php</file>
 		</testsuite>
 	</testsuites>
 </phpunit>
