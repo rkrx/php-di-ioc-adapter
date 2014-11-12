@@ -2,6 +2,7 @@
 namespace DIAdapter;
 
 use DI\Container;
+use Ioc\Exceptions\DefinitionNotFoundException;
 use Ioc\MethodInvoker;
 
 class PhpDiMethodInvoker implements MethodInvoker {
@@ -22,9 +23,14 @@ class PhpDiMethodInvoker implements MethodInvoker {
 	 * method-invoker tries to fill the missing arguments by itself.
 	 * @param $callable
 	 * @param array $arguments
+	 * @throws DefinitionNotFoundException
 	 * @return mixed
 	 */
 	public function invoke($callable, array $arguments = array()) {
-		return $this->container->call($callable, $arguments);
+		try {
+			return $this->container->call($callable, $arguments);
+		} catch (\Exception $e) {
+			throw new DefinitionNotFoundException($e->getMessage(), $e->getCode());
+		}
 	}
 }

@@ -2,6 +2,7 @@
 namespace DIAdapter;
 
 use DI\Container;
+use Ioc\Exceptions\DefinitionNotFoundException;
 use Ioc\ObjectFactory;
 
 class PhpDiObjectFactory implements ObjectFactory {
@@ -22,9 +23,14 @@ class PhpDiObjectFactory implements ObjectFactory {
 	 * arguments were missing in $arguments, the method-invoker tries to fill the missing arguments by itself.
 	 * @param string $className
 	 * @param array $arguments
+	 * @throws DefinitionNotFoundException
 	 * @return mixed
 	 */
 	public function create($className, array $arguments = array()) {
-		return $this->container->make($className, $arguments);
+		try {
+			return $this->container->make($className, $arguments);
+		} catch (\Exception $e) {
+			throw new DefinitionNotFoundException($e->getMessage(), $e->getCode());
+		}
 	}
 }
