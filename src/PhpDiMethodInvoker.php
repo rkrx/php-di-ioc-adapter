@@ -2,6 +2,7 @@
 namespace DIAdapter;
 
 use DI\Container;
+use Interop\Container\Exception\ContainerException;
 use Ioc\Exceptions\DefinitionNotFoundException;
 use Ioc\MethodInvoker;
 
@@ -29,7 +30,7 @@ class PhpDiMethodInvoker implements MethodInvoker {
 	public function invoke($callable, array $arguments = array()) {
 		try {
 			return $this->container->call($callable, $arguments);
-		} catch (\Exception $e) {
+		} catch (ContainerException $e) {
 			throw new DefinitionNotFoundException($e->getMessage(), $e->getCode());
 		}
 	}

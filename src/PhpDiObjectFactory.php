@@ -2,6 +2,7 @@
 namespace DIAdapter;
 
 use DI\Container;
+use Interop\Container\Exception\ContainerException;
 use Ioc\Exceptions\DefinitionNotFoundException;
 use Ioc\ObjectFactory;
 
@@ -29,7 +30,7 @@ class PhpDiObjectFactory implements ObjectFactory {
 	public function create($className, array $arguments = array()) {
 		try {
 			return $this->container->make($className, $arguments);
-		} catch (\Exception $e) {
+		} catch (ContainerException $e) {
 			throw new DefinitionNotFoundException($e->getMessage(), $e->getCode());
 		}
 	}
