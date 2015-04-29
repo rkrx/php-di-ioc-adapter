@@ -1,5 +1,6 @@
 {
 	"name": "rkr/php-di-ioc-adapter",
+	"description": "An adapter for PHP-DI4 and rkr/php-ioc-contract",
 	"type": "library",
 	"license": "MIT",
 	"require": {
