@@ -2,14 +2,13 @@
 namespace DIAdapter;
 
 use DI\Container;
+use Exception;
 use Interop\Container\Exception\ContainerException;
 use Ioc\Exceptions\DefinitionNotFoundException;
 use Ioc\ObjectFactory;
 
 class PhpDiObjectFactory implements ObjectFactory {
-	/**
-	 * @var Container
-	 */
+	/** @var Container */
 	private $container;
 
 	/**
@@ -22,16 +21,20 @@ class PhpDiObjectFactory implements ObjectFactory {
 	/**
 	 * The object-factory creates a class with the name $className and the __construct-arguments $arguments. If
 	 * arguments were missing in $arguments, the method-invoker tries to fill the missing arguments by itself.
+	 *
 	 * @param string $className
 	 * @param array $arguments
 	 * @throws DefinitionNotFoundException
+	 * @throws Exception
 	 * @return mixed
 	 */
 	public function create($className, array $arguments = array()) {
 		try {
 			return $this->container->make($className, $arguments);
 		} catch (ContainerException $e) {
-			throw new DefinitionNotFoundException($e->getMessage(), $e->getCode());
+			throw new DefinitionNotFoundException($e->getMessage(), $e->getCode(), $e);
+		} catch (Exception $e) {
+			throw new Exception($e->getMessage(), $e->getCode(), $e);
 		}
 	}
 }
