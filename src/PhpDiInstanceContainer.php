@@ -2,6 +2,7 @@
 namespace DIAdapter;
 
 use DI\Container;
+use DIAdapter\Tools\ExceptionHelper;
 use Exception;
 use Interop\Container\Exception\ContainerException;
 use Ioc\Exceptions\DefinitionNotFoundException;
@@ -30,9 +31,9 @@ class PhpDiInstanceContainer implements InstanceContainer {
 		try {
 			return $this->container->get($className);
 		} catch (ContainerException $e) {
-			throw new DefinitionNotFoundException($e->getMessage(), $e->getCode(), $e);
+			throw ExceptionHelper::buildException($e, DefinitionNotFoundException::class);
 		} catch (Exception $e) {
-			throw new Exception($e->getMessage(), $e->getCode(), $e);
+			throw ExceptionHelper::buildException($e, Exception::class);
 		}
 	}
 }
