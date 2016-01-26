@@ -15,10 +15,14 @@ class ExceptionHelper {
 		if(!is_scalar($message) && !is_null($message)) {
 			$message = sprintf($errorMsg, 'message', gettype($message));
 			$code = 0;
+		} else {
+			$message = (string) $message;
 		}
-		if(!is_scalar($code) && !is_null($code)) {
+		if(!is_int($code) && !is_null($code)) {
 			$message = sprintf($errorMsg, 'code', gettype($code));
 			$code = 0;
+		} else {
+			$code = intval($code) > 0 ? intval($code) : 0;
 		}
 		if(!$exception instanceof Exception) {
 			$message = sprintf($errorMsg, 'exception', gettype($exception));
