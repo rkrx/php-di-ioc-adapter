@@ -22,9 +22,15 @@ class ExceptionHelper {
 		if(is_object($code) && method_exists($code, '__toString')) {
 			$code = (int) (string) $code;
 		}
-		if(!is_scalar($code) && !is_null($code)) {
+		if(!is_int($code) && !is_null($code)) {
 			$message = sprintf($errorMsg, 'code', gettype($code));
 			$code = -1;
+		}
+		if(!is_string($message)) {
+			$message = (string) $message;
+		}
+		if(!is_int($code)) {
+			$code = (int) $code;
 		}
 		if(!$exception instanceof Exception) {
 			$message = sprintf($errorMsg, 'exception', gettype($exception));
