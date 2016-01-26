@@ -1,6 +1,7 @@
 /*
 !/src
 !/tests
+!/.editorconfig
 !/.gitignore
 !/composer.json
 !/LICENSE

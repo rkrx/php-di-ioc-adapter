@@ -12,21 +12,23 @@ class ExceptionHelper {
 		$message = $exception->getMessage();
 		$code = $exception->getCode();
 		$errorMsg = sprintf('Invalid type for exception parameter `%%s`: %%s - thrown in %s:%d', $exception->getFile(), $exception->getLine());
-		if(!is_scalar($message) && !is_null($message)) {
-			$message = sprintf($errorMsg, 'message', gettype($message));
-			$code = 0;
-		} else {
+		if(is_object($message) && method_exists($message, '__toString')) {
 			$message = (string) $message;
 		}
-		if(!is_int($code) && !is_null($code)) {
+		if(!is_scalar($message) && !is_null($message)) {
+			$message = sprintf($errorMsg, 'message', gettype($message));
+			$code = -1;
+		}
+		if(is_object($code) && method_exists($code, '__toString')) {
+			$code = (int) (string) $code;
+		}
+		if(!is_scalar($code) && !is_null($code)) {
 			$message = sprintf($errorMsg, 'code', gettype($code));
-			$code = 0;
-		} else {
-			$code = intval($code) > 0 ? intval($code) : 0;
+			$code = -1;
 		}
 		if(!$exception instanceof Exception) {
 			$message = sprintf($errorMsg, 'exception', gettype($exception));
-			$code = 0;
+			$code = -1;
 			$exception = null;
 		}
 		return new $exceptionType($message, $code, $exception);

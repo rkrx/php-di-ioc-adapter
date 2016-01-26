@@ -33,9 +33,9 @@ class PhpDiObjectFactory implements ObjectFactory {
 		try {
 			return $this->container->make($className, $arguments);
 		} catch (ContainerException $e) {
-			throw ExceptionHelper::buildException($e, DefinitionNotFoundException::class);
+			throw ExceptionHelper::buildException($e, '\\Ioc\\Exceptions\\DefinitionNotFoundException');
 		} catch (Exception $e) {
-			throw ExceptionHelper::buildException($e, Exception::class);
+			throw ExceptionHelper::buildException($e, '\\Exception');
 		}
 	}
 }
