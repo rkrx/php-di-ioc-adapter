@@ -2,17 +2,19 @@
 namespace DIAdapter;
 
 use DI\ContainerBuilder;
+use DIAdapter\Test\Test;
+use PHPUnit\Framework\TestCase;
 
-class PhpDiMethodInvokerTest extends \PHPUnit_Framework_TestCase {
+class PhpDiMethodInvokerTest extends TestCase {
 	public function test() {
 		$builder = new ContainerBuilder();
 		$container = $builder->build();
 		$invoker = new PhpDiMethodInvoker($container);
 
-		$a = $invoker->invoke(array('DIAdapter\\Test\\Test', 'returnA'));
+		$a = $invoker->invoke(array(Test::class, 'returnA'));
 		$this->assertEquals('A', $a);
 
-		$b = $invoker->invoke(array('DIAdapter\\Test\\Test', 'returnB'));
+		$b = $invoker->invoke(array(Test::class, 'returnB'));
 		$this->assertEquals('B', $b);
 	}
 }
