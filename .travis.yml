@@ -8,7 +8,7 @@ php:
 
 before_script:
   - composer self-update
-  - composer --no-check-all update
+  - composer update
 
 script:
   - vendor/bin/phpunit -c tests.xml
