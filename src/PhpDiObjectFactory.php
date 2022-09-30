@@ -7,6 +7,7 @@ use Exception;
 use Interop\Container\Exception\ContainerException;
 use Ioc\Exceptions\DefinitionNotFoundException;
 use Ioc\ObjectFactory;
+use Throwable;
 
 class PhpDiObjectFactory implements ObjectFactory {
 	/** @var Container */
@@ -23,19 +24,20 @@ class PhpDiObjectFactory implements ObjectFactory {
 	 * The object-factory creates a class with the name $className and the __construct-arguments $arguments. If
 	 * arguments were missing in $arguments, the method-invoker tries to fill the missing arguments by itself.
 	 *
-	 * @param string $className
-	 * @param array $arguments
+	 * @template T
+	 * @param class-string<T> $className
+	 * @param array<mixed, mixed> $arguments
 	 * @throws DefinitionNotFoundException
-	 * @throws Exception
-	 * @return mixed
+	 * @throws Throwable
+	 * @return T
 	 */
-	public function create($className, array $arguments = array()) {
+	public function create($className, array $arguments = []) {
 		try {
 			return $this->container->make($className, $arguments);
 		} catch (ContainerException $e) {
-			throw ExceptionHelper::buildException($e, '\\Ioc\\Exceptions\\DefinitionNotFoundException');
+			throw ExceptionHelper::buildException($e, DefinitionNotFoundException::class);
 		} catch (Exception $e) {
-			throw ExceptionHelper::buildException($e, '\\Exception');
+			throw ExceptionHelper::buildException($e, Exception::class);
 		}
 	}
 }

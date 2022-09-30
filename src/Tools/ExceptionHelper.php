@@ -2,14 +2,19 @@
 namespace DIAdapter\Tools;
 
 use Exception;
+use Interop\Container\Exception\ContainerException;
+use Throwable;
 
 class ExceptionHelper {
 	/**
-	 * @param Exception $exception
-	 * @param string $exceptionType
+	 * @template T of Throwable
+	 * @param Exception|ContainerException $exception
+	 * @param class-string<T> $exceptionType
 	 */
-	public static function buildException(Exception $exception, $exceptionType) {
+	public static function buildException($exception, $exceptionType): Throwable {
+		/** @var mixed $message */
 		$message = $exception->getMessage();
+		/** @var mixed $code */
 		$code = $exception->getCode();
 		$errorMsg = sprintf('Invalid type for exception parameter `%%s`: %%s - thrown in %s:%d', $exception->getFile(), $exception->getLine());
 		if(is_object($message) && method_exists($message, '__toString')) {

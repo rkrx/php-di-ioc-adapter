@@ -7,6 +7,7 @@ use Exception;
 use Interop\Container\Exception\ContainerException;
 use Ioc\Exceptions\DefinitionNotFoundException;
 use Ioc\InstanceContainer;
+use Throwable;
 
 class PhpDiInstanceContainer implements InstanceContainer {
 	/** @var Container */
@@ -22,18 +23,21 @@ class PhpDiInstanceContainer implements InstanceContainer {
 	/**
 	 * Returns an instance of $className. Is no instance of $className exists, it will be created.
 	 *
-	 * @param string $className
+	 * @template T
+	 * @param class-string<T> $className
 	 * @throws DefinitionNotFoundException
-	 * @throws Exception
-	 * @return object
+	 * @throws Throwable
+	 * @return T
 	 */
 	public function get($className) {
 		try {
-			return $this->container->get($className);
+			/** @var T $result */
+			$result = $this->container->get($className);
+			return $result;
 		} catch (ContainerException $e) {
-			throw ExceptionHelper::buildException($e, '\\Ioc\\Exceptions\\DefinitionNotFoundException');
+			throw ExceptionHelper::buildException($e, DefinitionNotFoundException::class);
 		} catch (Exception $e) {
-			throw ExceptionHelper::buildException($e, '\\Exception');
+			throw ExceptionHelper::buildException($e, Exception::class);
 		}
 	}
 }

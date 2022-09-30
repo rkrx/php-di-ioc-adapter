@@ -24,18 +24,18 @@ class PhpDiMethodInvoker implements MethodInvoker {
 	 * method-invoker tries to fill the missing arguments by itself.
 	 *
 	 * @param callable $callable
-	 * @param array $arguments
+	 * @param array<mixed, mixed> $arguments
 	 * @throws DefinitionNotFoundException
 	 * @throws Exception
 	 * @return mixed
 	 */
-	public function invoke($callable, array $arguments = array()) {
+	public function invoke($callable, array $arguments = []) {
 		try {
 			return $this->container->call($callable, $arguments);
 		} catch (ContainerException $e) {
-			throw ExceptionHelper::buildException($e, '\\Ioc\\Exceptions\\DefinitionNotFoundException');
+			throw ExceptionHelper::buildException($e, DefinitionNotFoundException::class);
 		} catch (Exception $e) {
-			throw ExceptionHelper::buildException($e, '\\Exception');
+			throw ExceptionHelper::buildException($e, Exception::class);
 		}
 	}
 }
