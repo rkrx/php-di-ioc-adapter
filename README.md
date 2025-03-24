@@ -11,4 +11,4 @@ An adapter for [PHP-DI](http://php-di.org/) (6.*@stable) and `rkr/php-ioc-contra
 
 ## Install
 
-`composer require rkr/php-di-ioc-adapter 0.3.*`
+`composer require rkr/php-di-ioc-adapter 7.*@stable`
