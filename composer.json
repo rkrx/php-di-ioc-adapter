@@ -4,9 +4,9 @@
 	"type": "library",
 	"license": "MIT",
 	"require": {
-		"php": ">= 7.1",
+		"php": ">= 8.0",
 		"rkr/php-ioc-contract": "0.1.*@stable",
-		"php-di/php-di": "6.*@stable",
+		"php-di/php-di": "^7.0@stable",
 		"container-interop/container-interop": "^1.2"
 	},
 	"require-dev": {
