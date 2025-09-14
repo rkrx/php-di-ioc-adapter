@@ -2,13 +2,13 @@
 namespace DIAdapter\Tools;
 
 use Exception;
-use Interop\Container\Exception\ContainerException;
+use Psr\Container\ContainerExceptionInterface;
 use Throwable;
 
 class ExceptionHelper {
 	/**
 	 * @template T of Throwable
-	 * @param Exception|ContainerException $exception
+	 * @param Exception|ContainerExceptionInterface $exception
 	 * @param class-string<T> $exceptionType
 	 */
 	public static function buildException($exception, $exceptionType): Throwable {

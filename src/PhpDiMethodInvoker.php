@@ -4,20 +4,14 @@ namespace DIAdapter;
 use DI\Container;
 use DIAdapter\Tools\ExceptionHelper;
 use Exception;
-use Interop\Container\Exception\ContainerException;
 use Ioc\Exceptions\DefinitionNotFoundException;
 use Ioc\MethodInvoker;
+use Psr\Container\ContainerExceptionInterface;
 
 class PhpDiMethodInvoker implements MethodInvoker {
-	/** @var Container */
-	private $container;
-
-	/**
-	 * @param Container $container
-	 */
-	public function __construct(Container $container) {
-		$this->container = $container;
-	}
+	public function __construct(
+		private Container $container
+	) {}
 
 	/**
 	 * Invokes the callable $callable with the arguments $arguments. If arguments were missing in $arguments, the
@@ -32,7 +26,7 @@ class PhpDiMethodInvoker implements MethodInvoker {
 	public function invoke($callable, array $arguments = []) {
 		try {
 			return $this->container->call($callable, $arguments);
-		} catch (ContainerException $e) {
+		} catch (ContainerExceptionInterface $e) {
 			throw ExceptionHelper::buildException($e, DefinitionNotFoundException::class);
 		} catch (Exception $e) {
 			throw ExceptionHelper::buildException($e, Exception::class);

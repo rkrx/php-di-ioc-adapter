@@ -4,21 +4,15 @@ namespace DIAdapter;
 use DI\Container;
 use DIAdapter\Tools\ExceptionHelper;
 use Exception;
-use Interop\Container\Exception\ContainerException;
 use Ioc\Exceptions\DefinitionNotFoundException;
 use Ioc\ObjectFactory;
+use Psr\Container\ContainerExceptionInterface;
 use Throwable;
 
 class PhpDiObjectFactory implements ObjectFactory {
-	/** @var Container */
-	private $container;
-
-	/**
-	 * @param Container $container
-	 */
-	public function __construct(Container $container) {
-		$this->container = $container;
-	}
+	public function __construct(
+		private Container $container
+	) {}
 
 	/**
 	 * The object-factory creates a class with the name $className and the __construct-arguments $arguments. If
@@ -31,10 +25,10 @@ class PhpDiObjectFactory implements ObjectFactory {
 	 * @throws Throwable
 	 * @return T
 	 */
-	public function create($className, array $arguments = []) {
+	public function create(string $className, array $arguments = []) {
 		try {
 			return $this->container->make($className, $arguments);
-		} catch (ContainerException $e) {
+		} catch (ContainerExceptionInterface $e) {
 			throw ExceptionHelper::buildException($e, DefinitionNotFoundException::class);
 		} catch (Exception $e) {
 			throw ExceptionHelper::buildException($e, Exception::class);
